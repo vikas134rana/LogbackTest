@@ -1,0 +1,35 @@
+<configuration debug="true">
+
+    <!-- Console Appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Rolling File Appender with TimeBasedRollingPolicy -->
+    <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/myapp.log</file>
+        <encoder>
+            <pattern>%d{"yyyy-MM-dd HH:mm:ss.SSSXX", America/New_York} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+
+        <!-- Time-based rolling policy -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Set the rollover interval (every minute) -->
+            <fileNamePattern>logs/myapp-%d{yyyy-MM-dd_HH-mm}.log</fileNamePattern>
+
+            <!-- Set the rollover interval (daily) -->
+<!--            <fileNamePattern>logs/myapp-%d{yyyy-MM-dd}.log</fileNamePattern>-->
+        </rollingPolicy>
+    </appender>
+
+<!--    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />-->
+
+    <!-- Set the root logger level and attach both appenders -->
+    <root level="debug">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="ROLLING_FILE" />
+    </root>
+
+</configuration>
